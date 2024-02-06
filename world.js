@@ -192,20 +192,32 @@ lilRPG.world = function (spec) {
             position = {x: Math.floor(Math.random() * spec.width),
                         y: Math.floor(Math.random() * spec.height)},
             positionValid = false;
+	    // fill with walls
+	for (y = 0; y < spec.height; y++) {
+	    for (x = 0; x < spec.width; x++) {
+		spec.tiles[y][x]
+		    .setCharacter('#')
+		    .setColor('#8595a1')
+		    .setBackground('#8595a1')
+		    .setPosition(x, y)
+		    .makeSolid();
+	    }
+	}
 
-        spec.tiles[position.y][position.x] = lilRPG.tile({})
-                                                 .setCharacter('.')
-                                                 .setColor('#d2aa99')
-                                                 .setBackground('#4e4a4e')
-                                                 .setPosition(position.x,
-                                                              position.y);
+        spec.tiles[position.y][position.x]
+	    .setCharacter('.')
+            .setColor('#d2aa99')
+            .setBackground('#4e4a4e')
+            .setPosition(position.x, position.y)
+	    .makeNotSolid();
 
         tilesCarved++;
 
         while (tilesCarved != floorTilesNeeded) {
+	    console.log("loop");
             positionValid = false;
             while (positionValid === false) {
-                if (Math.random() < .25) {
+                if (Math.random() < .5) {
                     direction = directions[Math.floor(Math.random() * 4)];
                 }
                 if (position.x + direction.x > 0 &&
@@ -220,15 +232,18 @@ lilRPG.world = function (spec) {
 
             if (spec.tiles[position.y][position.x].getCharacter() ===
                 '#') {
-                spec.tiles[position.y][position.x] =
-                    lilRPG.tile({})
-                        .setCharacter('.')
-                        .setColor('#d2aa99')
-                        .setBackground('#4e4a4e')
-                        .setPosition(position.x, position.y);
+		console.log("wall");
+                spec.tiles[position.y][position.x]
+		    .setCharacter('.')
+		    .setColor('#d2aa99')
+		    .setBackground('#4e4a4e')
+		    .setPosition(position.x, position.y)
+		    .makeNotSolid();
                 tilesCarved++;
             }
+	    console.log(floorTilesNeeded, tilesCarved);
         }
+	console.log("done");
         return this;
     };
 

@@ -8,8 +8,8 @@ window.onload = function () {
         display = lilRPG.display({width: 80, height: 24}),
 
         world = lilRPG.world({})
-                    //.drunkardWalk(.60),
-                    .generateNormalDungeon(),
+                    .drunkardWalk(.60),
+                    //.generateNormalDungeon(),
         
         startTile = world.getEmptyTile(),
 
@@ -17,6 +17,8 @@ window.onload = function () {
             .setCharacter('@')
             .setColor('#dad45e')
             .setPosition(startTile.getX(), startTile.getY());
+
+	console.log("guy good");
 
     world.addEntity(guy);
 
